@@ -1,5 +1,8 @@
 appdirs==1.4.0
+future==0.16.0
 packaging==16.8
+PyInstaller==3.2.1
 pyparsing==2.1.10
+pypiwin32==220
 requests==2.13.0
 six==1.10.0
