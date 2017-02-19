@@ -1,8 +1,28 @@
+import argparse
 
-tides = 'tides-dabob.txt'
-tides = open(tides,'r')
 
-for tide in tides:
+stations = {"Seattle":"9447130_annual.txt", "Whitney":"9445246_annual.txt"}
+
+
+parser = argparse.ArgumentParser()
+#parser.parse_args()
+
+parser.add_argument("--station", help="specify station data")
+args = parser.parse_args()
+if args.station:
+    print("station called")
+	#tides = stations[args.station]
+else:
+	print("Seattle")
+	print("Point Whitney")
+	
+	
+#source: https://tidesandcurrents.noaa.gov
+
+#tides = 'tides-dabob.txt'
+tidesfh = open(tides,'r')
+
+for tide in tidesfh:
 	if '2017/02/19' in tide:
 		elements = tide.split()
 		if 'AM' in elements[3]:
