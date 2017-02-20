@@ -10,12 +10,14 @@ parser = argparse.ArgumentParser()
 parser.add_argument("--station", help="specify station data")
 args = parser.parse_args()
 if args.station:
-    print("station called")
-	#tides = stations[args.station]
+	print("station called")
+	print(args.station)
+	tides = stations[args.station]
 else:
+	print("Be sure to include one of the stations below:")
 	print("Seattle")
 	print("Point Whitney")
-	
+	exit()
 	
 #source: https://tidesandcurrents.noaa.gov
 
