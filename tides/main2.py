@@ -8,7 +8,9 @@ parser = argparse.ArgumentParser()
 #parser.parse_args()
 
 parser.add_argument("--station", help="specify station data")
+parser.add_argument("--date", help="specify data as yyyy/mm/dd")
 args = parser.parse_args()
+
 if args.station:
 	print("station called")
 	print(args.station)
@@ -19,13 +21,20 @@ else:
 	print("Point Whitney")
 	exit()
 	
+if args.date:
+	print("For date: %s" % args.date)
+	date = args.date
+else:
+	print("Dont forget to specify date.")
+	exit()
+	
 #source: https://tidesandcurrents.noaa.gov
 
 #tides = 'tides-dabob.txt'
 tidesfh = open(tides,'r')
 
 for tide in tidesfh:
-	if '2017/02/19' in tide:
+	if date in tide:
 		elements = tide.split()
 		if 'AM' in elements[3]:
 			if 'L' in elements[6]:
