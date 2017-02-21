@@ -1,6 +1,9 @@
 import argparse
+from colorconsole import terminal
+from func import resetcolor
 
 
+term = terminal.get_terminal(conEmu=False)
 stations = {"Seattle":"9447130_annual.txt", "Whitney":"9445246_annual.txt"}
 
 
@@ -18,7 +21,7 @@ if args.station:
 else:
 	print("Be sure to include one of the stations below:")
 	print("Seattle")
-	print("Point Whitney")
+	print("Whitney")
 	exit()
 	
 if args.date:
@@ -39,14 +42,20 @@ for tide in tidesfh:
 		if 'AM' in elements[3]:
 			if 'L' in elements[6]:
 				low = float(elements[4])
+				term.cprint(4, 0, tide)
+				#print("\n")
 				
 			if 'H' in elements[6]:
 				high = float(elements[4])
+				term.cprint(2, 0, tide)
+				#print("\n")
 				
-			print(tide.strip())	
-				
+			#print(tide.strip())	
 			
 				
+			
+resetcolor(term)			
 exchange = high - low
 #print(str(elements))
 print("Exchange: %.2f" % exchange)
+resetcolor(term)
