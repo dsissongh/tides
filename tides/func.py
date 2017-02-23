@@ -1,4 +1,14 @@
+from datetime import timedelta
+from datetime import datetime
 
+def getdatefornextsaturday(cdate, dow):
+	saturday = 5-dow
+	if saturday > -1:
+		saturdaydate = datetime.now() + timedelta(days=int(saturday))
+		return saturdaydate
+	else:
+		return cdate
+	
 def resetcolor(term):
 	#term.reset does not appear to be resetting the color correctly
 	#set the terminal back to lt grey on black

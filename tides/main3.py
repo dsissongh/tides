@@ -1,8 +1,11 @@
 import argparse
 import time
+import datetime
 from colorconsole import terminal
 from func import resetcolor
+from func import getdatefornextsaturday
 
+dow = datetime.datetime.today().weekday()
 term = terminal.get_terminal(conEmu=False)
 stations = {}
 
@@ -17,6 +20,7 @@ order = {}
 count = 1
 term.clear()
 term.cprint(3, 0, '')
+
 for key in stations:
 	order.update({count:stations[key]})
 	print("%s. %s" % (count, key))
@@ -27,15 +31,18 @@ for key in stations:
 selection = input("\nWhat station would you like to use for source tide data? ")
 tides = order[int(selection)]
 predate = time.strftime("%Y/%m/%d")
-date = input("What date would you like H/L tide information for (yyyy/mm/dd)? [" + predate + "]")
+saturday = getdatefornextsaturday(predate, dow)
+saturday = str(saturday).split(' ')
+#print(str(saturday))
+date = input("What date would you like H/L tide information for (yyyy/mm/dd)? [" + str(saturday[0].replace('-','/')) + "]")
 
 if date == '':
 	## yyyy/mm/dd format
-	date = time.strftime("%Y/%m/%d")
+	date = str(saturday[0].replace('-','/'))
 
 #source: https://tidesandcurrents.noaa.gov
 
-#tides = 'tides-dabob.txt'
+
 tidesfh = open(tides,'r')
 
 for tide in tidesfh:
