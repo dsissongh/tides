@@ -1,6 +1,7 @@
 import argparse
 import time
 import datetime
+import collections
 from colorconsole import terminal
 from func import resetcolor
 from func import getdatefornextsaturday
@@ -16,13 +17,15 @@ stations.update({"Admiralty Head":"9447905_annual.txt"})
 stations.update({"Marrowstone Point":"9444972_annual.txt"})
 stations.update({"Mystery Bay, Marrowstone Island":"9444971_annual.txt"})
 
+cstations = collections.OrderedDict(sorted(stations.items()))
+
 order = {}
 count = 1
 term.clear()
 term.cprint(3, 0, '')
-
-for key in stations:
-	order.update({count:stations[key]})
+print(str(cstations))
+for key in cstations:
+	order.update({count:cstations[key]})
 	print("%s. %s" % (count, key))
 	count += 1
 
