@@ -16,6 +16,7 @@ stations.update({"Port Townsend":"9444900_annual.txt"})
 stations.update({"Admiralty Head":"9447905_annual.txt"})
 stations.update({"Marrowstone Point":"9444972_annual.txt"})
 stations.update({"Mystery Bay, Marrowstone Island":"9444971_annual.txt"})
+stations.update({"Triton Head":"9445326_annual.txt"})
 
 cstations = collections.OrderedDict(sorted(stations.items()))
 
