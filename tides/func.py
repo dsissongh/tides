@@ -1,5 +1,28 @@
+import os
 from datetime import timedelta
 from datetime import datetime
+
+def generatedatadictionary():
+	stations = {}
+
+	dh = os.listdir(".")
+	for file in dh:
+		if "annual" in file:
+			#print(file)
+			fh = open("./" + file, "r")
+			name=""
+			for line in fh:
+				#print(line)
+
+				if "StationName:" in line:
+					#print(line)
+					elements = line.split("StationName:")
+					if not(name == "found"):
+						#print(file, elements[1])
+						stations.update({elements[1].strip():file})
+						name = "found"
+
+	return stations
 
 def getdatefornextsaturday(cdate, dow):
 	saturday = 5-dow

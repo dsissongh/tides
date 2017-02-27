@@ -5,18 +5,11 @@ import collections
 from colorconsole import terminal
 from func import resetcolor
 from func import getdatefornextsaturday
+from func import generatedatadictionary
 
 dow = datetime.datetime.today().weekday()
 term = terminal.get_terminal(conEmu=False)
-stations = {}
-
-stations.update({"Seattle":"9447130_annual.txt"})
-stations.update({"Point Whitney":"9445246_annual.txt"})
-stations.update({"Port Townsend":"9444900_annual.txt"})
-stations.update({"Admiralty Head":"9447905_annual.txt"})
-stations.update({"Marrowstone Point":"9444972_annual.txt"})
-stations.update({"Mystery Bay, Marrowstone Island":"9444971_annual.txt"})
-stations.update({"Triton Head":"9445326_annual.txt"})
+stations = generatedatadictionary()
 
 cstations = collections.OrderedDict(sorted(stations.items()))
 
@@ -24,7 +17,7 @@ order = {}
 count = 1
 term.clear()
 term.cprint(3, 0, '')
-print(str(cstations))
+#print(str(cstations))
 for key in cstations:
 	order.update({count:cstations[key]})
 	print("%s. %s" % (count, key))
