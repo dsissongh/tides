@@ -7,6 +7,7 @@ from func import resetcolor
 from func import getdatefornextsaturday
 from func import generatedatadictionary
 
+
 dow = datetime.datetime.today().weekday()
 term = terminal.get_terminal(conEmu=False)
 stations = generatedatadictionary()

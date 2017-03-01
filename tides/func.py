@@ -2,6 +2,18 @@ import os
 from datetime import timedelta
 from datetime import datetime
 
+
+def setpropercase(title):
+	newelements = []
+	elements = title.split(" ")
+	print(str(elements))
+	for word in elements:
+		newelements.append(str(word).lower().title())
+
+	print(str(newelements))
+	title = ' '.join(newelements)
+	return title
+
 def generatedatadictionary():
 	stations = {}
 
@@ -19,7 +31,8 @@ def generatedatadictionary():
 					elements = line.split("StationName:")
 					if not(name == "found"):
 						#print(file, elements[1])
-						stations.update({elements[1].strip():file})
+						stationname = setpropercase(elements[1].strip())
+						stations.update({stationname:file})
 						name = "found"
 
 	return stations
