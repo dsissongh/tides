@@ -2,15 +2,25 @@ import os
 from datetime import timedelta
 from datetime import datetime
 
+def sethistory(history,text):
+	fh = open(history,"w")
+	fh.write(text)
+	fh.close()
+
+def gethistory(history):
+	fh = open(history,"r")
+	text = fh.readline()
+	fh.close()
+	return text
 
 def setpropercase(title):
 	newelements = []
 	elements = title.split(" ")
-	print(str(elements))
+	#print(str(elements))
 	for word in elements:
 		newelements.append(str(word).lower().title())
 
-	print(str(newelements))
+	#print(str(newelements))
 	title = ' '.join(newelements)
 	return title
 
@@ -36,6 +46,19 @@ def generatedatadictionary():
 						name = "found"
 
 	return stations
+
+def getstationnamefromfile(file):
+	fh = open("./" + file, "r")
+	for line in fh:
+		#print(line)
+
+		if "StationName:" in line:
+			#print(line)
+			elements = line.split("StationName:")
+			stationname = setpropercase(elements[1].strip())
+			break
+
+	return stationname
 
 def getdatefornextsaturday(cdate, dow):
 	saturday = 5-dow

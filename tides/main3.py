@@ -1,3 +1,4 @@
+import os
 import argparse
 import time
 import datetime
@@ -6,6 +7,11 @@ from colorconsole import terminal
 from func import resetcolor
 from func import getdatefornextsaturday
 from func import generatedatadictionary
+from func import sethistory
+from func import gethistory
+from func import getstationnamefromfile
+
+history = "history.txt"
 
 
 dow = datetime.datetime.today().weekday()
@@ -25,9 +31,22 @@ for key in cstations:
 	count += 1
 
 #print(str(order))	
-	
-selection = input("\nWhat station would you like to use for source tide data? ")
+if os.path.exists(history):
+	choice = gethistory(history)
+	for key in order:
+		if choice == order[key]:
+			choice = str(key)
+
+else:
+	choice = ''
+
+selection = input("\nWhat station would you like to use for source tide data? [" + choice + "]")
+
+if selection == '':
+	selection = int(choice)
+
 tides = order[int(selection)]
+choice = sethistory(history,order[int(selection)])
 predate = time.strftime("%Y/%m/%d")
 saturday = getdatefornextsaturday(predate, dow)
 saturday = str(saturday).split(' ')
@@ -42,6 +61,8 @@ if date == '':
 
 
 tidesfh = open(tides,'r')
+sname = getstationnamefromfile(order[int(selection)])
+term.cprint(14, 0, "Station: " + sname + " for " + date + "\n")
 
 for tide in tidesfh:
 	if date in tide:
