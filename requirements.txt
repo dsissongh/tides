@@ -1,7 +1,8 @@
-appdirs==1.4.0
+appdirs==1.4.2
 colorconsole==0.7.2
-future==0.16.0
+HTMLParser==0.0.2
 packaging==16.8
-PyInstaller==3.2.1
+pkg-resources==0.0.0
 pyparsing==2.1.10
+requests==2.13.0
 six==1.10.0
