@@ -10,6 +10,7 @@ from func import generatedatadictionary
 from func import sethistory
 from func import gethistory
 from func import getstationnamefromfile
+from func import getlatlonfromstation
 
 history = "history.txt"
 

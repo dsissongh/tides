@@ -1,6 +1,8 @@
 import os
 from datetime import timedelta
 from datetime import datetime
+import requests
+from bs4 import BeautifulSoup
 
 def sethistory(history,text):
 	fh = open(history,"w")
@@ -23,6 +25,24 @@ def setpropercase(title):
 	#print(str(newelements))
 	title = ' '.join(newelements)
 	return title
+
+def getlatlonfromstation(station):
+	#https://tidesandcurrents.noaa.gov/tide_predictions.html?gid=1415
+
+	request = requests.get("https://tidesandcurrents.noaa.gov/tide_predictions.html?gid=1415")
+	#print(request.text)
+
+	data = request.text.split("\n")
+	datas = []
+	for line in data:
+		if '<td class="stationname">' in line:
+			if "PORT TOWNSEND" in line:
+				texto = BeautifulSoup(line, "html.parser")
+				for tag in texto.find_all('td'):
+					datas.append(tag.text.strip())
+
+	return datas
+
 
 def generatedatadictionary():
 	stations = {}
