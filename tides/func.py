@@ -4,6 +4,52 @@ from datetime import datetime
 import requests
 from bs4 import BeautifulSoup
 
+#needed for class
+from html.parser import HTMLParser
+
+class HTMLTextExtractor(HTMLParser):
+	def __init__(self):
+		#super().__init__()
+		HTMLParser.__init__(self)
+		self.result = [ ]
+
+	def handle_data(self, d):
+		self.result.append(d)
+
+	def handle_charref(self, number):
+		codepoint = int(number[1:], 16) if number[0] in (u'x', u'X') else int(number)
+		self.result.append(unichr(codepoint))
+
+	def handle_entityref(self, name):
+		codepoint = htmlentitydefs.name2codepoint[name]
+		self.result.append(unichr(codepoint))
+
+	def get_text(self):
+		return u''.join(self.result)
+
+def html_to_text(html):
+	s = HTMLTextExtractor()
+	s.feed(html)
+	return s.get_text()
+
+
+def getlatlonforstation(stationname):
+	#https://tidesandcurrents.noaa.gov/tide_predictions.html?gid=1415
+
+	request = requests.get("https://tidesandcurrents.noaa.gov/tide_predictions.html?gid=1415")
+	#print(request.text)
+
+	data = request.text.split("\n")
+	datas = []
+	for line in data:
+		if '<td class="stationname">' in line:
+			if stationname.lower() in line.lower():
+				texto = BeautifulSoup(line, "html.parser")
+				for tag in texto.find_all('td'):
+					datas.append(tag.text.strip())
+
+	return datas
+
 def sethistory(history,text):
 	fh = open(history,"w")
 	fh.write(text)

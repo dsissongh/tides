@@ -3,6 +3,7 @@ import argparse
 import time
 import datetime
 import collections
+import requests
 from colorconsole import terminal
 from func import resetcolor
 from func import getdatefornextsaturday
@@ -10,7 +11,9 @@ from func import generatedatadictionary
 from func import sethistory
 from func import gethistory
 from func import getstationnamefromfile
-from func import getlatlonfromstation
+#from func import getlatlonfromstation
+from func import getlatlonforstation
+from func import html_to_text
 
 history = "history.txt"
 
@@ -65,6 +68,32 @@ tidesfh = open(tides,'r')
 sname = getstationnamefromfile(order[int(selection)])
 term.cprint(14, 0, "Station: " + sname + " for " + date + "\n")
 
+#get the associated lat/lon
+data = getlatlonforstation(sname)
+#print(str(data))
+latitude = data[2].replace("+","")
+longitude = data[3]
+
+request = requests.get("http://marine.weather.gov/MapClick.php?lon=" + longitude + "&lat=" + latitude + "#.WLd5Yu2lvVM")
+newdata = request.text
+
+datas = newdata.split("\n")
+daynottolookfor = "Saturday"
+daytolookfor = "Saturday", "Today"
+
+for line in datas:
+	if "forecast-label" in line:
+		newdata = line.split('forecast-label')
+		for newline in newdata:
+			nohtml = html_to_text(newline)
+			if nohtml[0:2] == '">':
+				nohtml = nohtml[2:]
+
+			if any(s in nohtml for s in daytolookfor):
+				if not daynottolookfor + " Night" in nohtml:
+					nohtml = nohtml.replace(daynottolookfor,daynottolookfor + ": ")
+					
+
 for tide in tidesfh:
 	if date in tide:
 		elements = tide.split()
@@ -87,4 +116,5 @@ resetcolor(term)
 exchange = high - low
 #print(str(elements))
 print("Exchange: %.2f" % exchange)
+print(nohtml)
 resetcolor(term)
