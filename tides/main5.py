@@ -54,7 +54,7 @@ def getlatlonforstation(stationname):
 
 #get the list of files
 files = generatedatadictionary()
-print(str(files))
+#print(str(files))
 print("\n")
 for key in files:
 	print(key)
@@ -62,11 +62,11 @@ for key in files:
 
 	#get the associated lat/lon
 	data = getlatlonforstation(key)
-	print(str(data))
+	#print(str(data))
 	latitude = data[2].replace("+","")
 	longitude = data[3]
-	print(latitude)
-	print(longitude)
+	#print(latitude)
+	#print(longitude)
 
 	#get the report for the day
 
@@ -74,7 +74,8 @@ for key in files:
 	data = request.text
 
 	datas = data.split("\n")
-	daytolookfor = "Saturday"
+	daynottolookfor = "Saturday"
+	daytolookfor = "Saturday", "Today"
 	for line in datas:
 		if "forecast-label" in line:
 			newdata = line.split('forecast-label')
@@ -83,9 +84,9 @@ for key in files:
 				if nohtml[0:2] == '">':
 					nohtml = nohtml[2:]
 
-				if daytolookfor in nohtml:
-					if not daytolookfor + " Night" in nohtml:
-						nohtml = nohtml.replace(daytolookfor,daytolookfor + ": ")
+				if any(s in nohtml for s in daytolookfor):
+					if not daynottolookfor + " Night" in nohtml:
+						nohtml = nohtml.replace(daynottolookfor,daynottolookfor + ": ")
 						print(nohtml)
 						#print(html_to_text(newline))
 						#print("\n")

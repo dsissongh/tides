@@ -17,9 +17,9 @@ from func import getlatlonforstation
 from func import html_to_text
 
 history = "history.txt"
-sqlitefile = data.sqlite
-conn = sqlite3.connect(sqlitefile)
-c = conn.cursor()
+#sqlitefile = data.sqlite
+#conn = sqlite3.connect(sqlitefile)
+#c = conn.cursor()
 
 dow = datetime.datetime.today().weekday()
 term = terminal.get_terminal(conEmu=False)

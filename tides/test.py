@@ -31,6 +31,7 @@ def html_to_text(html):
 	return s.get_text()
 
 
+#http://marine.weather.gov/MapClick.php?lon=-122.7580&lat=48.1117#.WLkrDu2lvVM
 request = requests.get("http://marine.weather.gov/MapClick.php?lon=-122.89559&lat=47.67598#.WLd5Yu2lvVM")
 data = request.text
 
@@ -40,6 +41,14 @@ for line in datas:
 	if "forecast-label" in line:
 		newdata = line.split('forecast-label')
 		for newline in newdata:
+			nohtml = html_to_text(newline)
+			if nohtml[0:2] == '">':
+				nohtml = nohtml[2:]
 
-			print(html_to_text(newline))
-			print("\n")
+			if daytolookfor in nohtml:
+				if not daytolookfor + " Night" in nohtml:
+					nohtml = nohtml.replace(daytolookfor,daytolookfor + ": ")
+					print(nohtml)
+					#print(html_to_text(newline))
+					#print("\n")
+					#14
