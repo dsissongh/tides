@@ -78,6 +78,8 @@ latitude = data[2].replace("+","")
 longitude = data[3]
 
 request = requests.get("http://marine.weather.gov/MapClick.php?lon=" + longitude + "&lat=" + latitude + "#.WLd5Yu2lvVM")
+print("http://marine.weather.gov/MapClick.php?lon=" + longitude + "&lat=" + latitude + "#.WLd5Yu2lvVM" + "\n")
+
 newdata = request.text
 
 datas = newdata.split("\n")
