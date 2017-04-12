@@ -1,8 +1,23 @@
 import os
-
+import collections
 
 def showmenu():
-	return generatedatadictionary()
+	''' 
+		generates the menu based on the files for anual tide
+		information found in the directory 
+	'''
+
+	order = {}
+	menu = ''
+	count = 1
+	stations = generatedatadictionary()
+	cstations = collections.OrderedDict(sorted(stations.items()))
+	for key in cstations:
+		order.update({count:cstations[key]})
+		menu += str(count) + ". " + key + "\n"
+		count += 1
+
+	return menu, order
 
 
 def generatedatadictionary():
@@ -38,3 +53,25 @@ def setpropercase(title):
 	#print(str(newelements))
 	title = ' '.join(newelements)
 	return title
+
+
+def gethistory(history, order):
+	#history = "../" + history
+	choice = ''
+	if os.path.exists(history):
+
+		fh = open(history,"r")
+		choice = fh.readline()
+		fh.close()
+		print("--" + choice)
+
+	for key in order:
+		print(order[key])
+		if choice == order[key]:
+			choice = str(key)
+
+	else:
+		choice = ''
+
+	selection = input("\nWhat station would you like to use for source tide data? [" + choice + "]")
+	return selection
