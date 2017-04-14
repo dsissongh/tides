@@ -59,7 +59,7 @@ def gethistory(history, order):
 	#history = "../" + history
 	choice = ''
 	if os.path.exists(history):
-
+		print("found")
 		fh = open(history,"r")
 		choice = fh.readline()
 		fh.close()
@@ -75,3 +75,10 @@ def gethistory(history, order):
 
 	selection = input("\nWhat station would you like to use for source tide data? [" + choice + "]")
 	return selection
+
+def sethistory(history,text):
+	print(history)
+	print(text)
+	fh = open(history,"w")
+	fh.write(text)
+	fh.close()
