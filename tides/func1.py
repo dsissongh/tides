@@ -55,7 +55,7 @@ def setpropercase(title):
 	return title
 
 
-def gethistory(history, order):
+def gethistory1(history, order):
 	#history = "../" + history
 	choice = ''
 	if os.path.exists(history):
@@ -74,11 +74,27 @@ def gethistory(history, order):
 		choice = ''
 
 	selection = input("\nWhat station would you like to use for source tide data? [" + choice + "]")
-	return selection
+	return order[int(selection)]
 
+
+def gethistory(history):
+	fh = open(history,"r")
+	text = fh.readline()
+	fh.close()
+	return text
+
+	
 def sethistory(history,text):
 	print(history)
 	print(text)
 	fh = open(history,"w")
 	fh.write(text)
 	fh.close()
+
+
+def getchoice(tochoosefrom):
+	choice = ''
+	selection = input("\nWhat station would you like to use for source tide data? [" + choice + "]")
+	choice = tochoosefrom[int(selection)]
+
+	return choice
